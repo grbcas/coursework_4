@@ -1,15 +1,15 @@
-from vacancy import *
+from api import *
 import requests
 import os
 # from pathlib import Path
 
-# class ParserHH(Vacancy):
+# class ParserHH(Api):
 # 	def get_vacancy(self):
 # 		data = requests.get('https:/api.hh.ru/vacancies/').json()
 # 		return data
 
 
-class ParserSJ(Vacancy):
+class ParserSJ(Api):
 	api_key: str = os.getenv('SUPERJOB_TOKEN')
 	headers: str = {'X-Api-App-Id': api_key}
 
@@ -28,20 +28,37 @@ class ParserSJ(Vacancy):
 
 
 class Vacancy:
+	"""
+	Создать класс для работы с вакансиями.
+	В этом классе самостоятельно определить атрибуты:
+	 название вакансии, ссылка на вакансию,
+	 зарплата,
+	 краткое описание или требования и т.п. (не менее четырех)
+	Класс должен поддерживать методы сравнения вакансий между собой по зарплате
+	 и валидировать данные, которыми инициализируются его атрибуты
+	"""
 	def __init__(self, salary):
 		self.salary = salary
+		self.url = url
+		self.requirements = requirements
 
-	def __gt__(self, other):
-		if other.salary > self.salary:
-			return True
+	@classmethod
+	def __verify_data(cls, other):
+		if not isinstance(other, int | Vacancy):
+			raise TypeError("The operand must have the type int or Vacancy")
+		return other if isinstance(other, int) else other.salary
 
 	def __eq__(self, other):
-		if other.salary == self.salary:
-			return True
+		sc = self.__verify_data(other)
+		return self.salary == sc
+
+	def __gt__(self, other):
+		sc = self.__verify_data(other)
+		return self.salary > sc
 
 	def __lt__(self, other):
-		if other.salary < self.salary:
-			return True
+		sc = self.__verify_data(other)
+		return self.salary < sc
 
 
 if __name__ == '__main__':

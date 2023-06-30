@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class Vacancy(ABC):
+class Api(ABC):
 	@abstractmethod
 	def __init__(self):
 		pass
