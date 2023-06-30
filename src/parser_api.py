@@ -20,7 +20,7 @@ class ParserSJ(Api):
 		print(self.keyword)
 		api_url = f'https://api.superjob.ru/2.0/vacancies/?' \
 				f'keyword={self.keyword}&' \
-				f'count=1'
+				f'count=5'
 
 		sj_data = requests.get(api_url, headers=self.headers).json()
 
@@ -31,16 +31,38 @@ class Vacancy:
 	"""
 	Создать класс для работы с вакансиями.
 	В этом классе самостоятельно определить атрибуты:
-	 название вакансии, ссылка на вакансию,
+	 название вакансии,
+	 ссылка на вакансию,
 	 зарплата,
 	 краткое описание или требования и т.п. (не менее четырех)
 	Класс должен поддерживать методы сравнения вакансий между собой по зарплате
 	 и валидировать данные, которыми инициализируются его атрибуты
 	"""
-	def __init__(self, salary):
-		self.salary = salary
-		self.url = url
+	def __init__(self, profession, salary, link, requirements, currency):
+		self.profession = profession
+		self.__salary = salary
+		self.link = link
 		self.requirements = requirements
+		self.currency = currency
+
+	@property
+	def salary(self):
+		return self.__salary
+
+	@salary.setter
+	def salary(self, salary):
+		if salary == 0:
+			self.__salary = 50000
+		else:
+			rate = self.get_exchange_rate(self.currency)
+			# rate = 1
+			self.__salary = salary * rate
+
+	@staticmethod
+	def get_exchange_rate(currency):
+		rate = requests.get('https://www.cbr-xml-daily.ru/daily_json.js').json()
+		return rate['Valute'][currency]['Value']
+
 
 	@classmethod
 	def __verify_data(cls, other):
