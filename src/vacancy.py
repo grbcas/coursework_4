@@ -1,30 +1,4 @@
-from api import *
 import requests
-import os
-# from pathlib import Path
-
-# class ParserHH(Api):
-# 	def get_vacancy(self):
-# 		data = requests.get('https:/api.hh.ru/vacancies/').json()
-# 		return data
-
-
-class ParserSJ(Api):
-	api_key: str = os.getenv('SUPERJOB_TOKEN')
-	headers: str = {'X-Api-App-Id': api_key}
-
-	def __init__(self, keyword):
-		self.keyword: str = keyword
-
-	def get_vacancy(self):
-		print(self.keyword)
-		api_url = f'https://api.superjob.ru/2.0/vacancies/?' \
-				f'keyword={self.keyword}&' \
-				f'count=5'
-
-		sj_data = requests.get(api_url, headers=self.headers).json()
-
-		return sj_data['objects']
 
 
 class Vacancy:
@@ -39,30 +13,35 @@ class Vacancy:
 	 и валидировать данные, которыми инициализируются его атрибуты
 	"""
 	def __init__(self, profession, salary, link, requirements, currency):
-		self.profession = profession
-		self.__salary = salary
-		self.link = link
-		self.requirements = requirements
-		self.currency = currency
+		self.profession: str = profession
+		self.currency: str = currency
+		self.salary = salary
+		self.link: str = link
+		self.requirements: str = requirements
+
 
 	@property
 	def salary(self):
-		return self.__salary
+		return self._salary
 
 	@salary.setter
-	def salary(self, salary):
-		if salary == 0:
-			self.__salary = 50000
+	def salary(self, value):
+		if value == 0:
+			self._salary = 9999
+			# print(f': {value} = {self._salary}')
 		else:
+			self._salary = value * self.convert_salary()
+
+	def convert_salary(self):
+		if self.currency != 'rub':
 			rate = self.get_exchange_rate(self.currency)
-			# rate = 1
-			self.__salary = salary * rate
+			return rate
+		return 1
 
 	@staticmethod
 	def get_exchange_rate(currency):
 		rate = requests.get('https://www.cbr-xml-daily.ru/daily_json.js').json()
-		return rate['Valute'][currency]['Value']
-
+		return rate['Valute'][currency.upper()]['Value']
 
 	@classmethod
 	def __verify_data(cls, other):
@@ -82,13 +61,29 @@ class Vacancy:
 		sc = self.__verify_data(other)
 		return self.salary < sc
 
+	def __str__(self):
+		return f'{self.profession} {self._salary} {self.currency} {self.link} '
+	# {self.requirements}
+
 
 if __name__ == '__main__':
 	iu = {'hr_platform': 'SuperJob', 'keyword': 'py', 'top_n_vacancies': 2, 'vacancies_sorted': True}
 
-	sj = ParserSJ('python')
-	data = sj.get_vacancy()
-	print(len(data))
-	with open('sj.json', mode='w', encoding='utf8') as f:
-		# f.write(data)
-		print(data, file=f)
+	# sj = ParserSJ('python')
+	# data = sj.get_vacancy()
+	# print(len(data))
+	# with open('sj.json', mode='w', encoding='utf8') as f:
+	# 	# f.write(data)
+	# 	print(data, file=f)
+	#
+	# vacancies = []
+	# for i_vacancy in data:
+	# 	profession = i_vacancy['profession']
+	# 	salary = i_vacancy['payment_from']
+	# 	link = i_vacancy['link']
+	# 	requirements = i_vacancy['link']
+	# 	currency = i_vacancy['currency']
+	#
+	# 	vacancies.append(Vacancy(profession, salary, link, requirements, currency))
+	#
+	# print(vacancies[0])
