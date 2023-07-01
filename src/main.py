@@ -6,7 +6,6 @@ from src.save2file import *
 # iu = interact_user()
 iu = {'hr_platform': 'SuperJob', 'keyword': 'py', 'top_n_vacancies': 2, 'vacancies_sorted': True}
 
-
 sj = ParserSJ('python')
 data = sj.get_vacancy()
 with open('sj.json', mode='w', encoding='utf8') as f:
@@ -24,9 +23,6 @@ for i_vacancy in data:
     vacancies.append(Vacancy(profession, salary, link, requirements, currency))
 
 vacancy = vacancies[0]
-print(vacancy)
-# print(vacancies[0].salary)
-# vacancies[0].salary = 0
-# print(vacancies[0].salary)
-
-Save2json.save2file(vacancy)
+# v = vacancy.__dict__
+save2json = Save2json()
+save2json.save2file(vacancy.__dict__)

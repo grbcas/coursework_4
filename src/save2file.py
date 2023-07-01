@@ -11,12 +11,9 @@ import json
 
 
 class AbstractSave(ABC):
-    @abstractmethod
-    def __init__(self):
-        pass
 
     @abstractmethod
-    def save2file(self):
+    def save2file(self, data):
         pass
 
 # PATH = Path(Path(__file__).parent.parent, 'data', 'sj.json')
@@ -28,13 +25,15 @@ class Save2json(AbstractSave):
     """
     # path_json = Path(Path(__file__).parent.parent, 'data', 'vacancy.json')
 
-    def __init__(self, data):
-        self.data: dict = data
-        self.path_json = Path(Path(__file__).parent.parent, 'data', 'vacancy.json')
+    def save2file(self, data):
+        path_json = Path(Path(__file__).parent.parent, 'data', 'vacancy.json')
 
-    def save2file(self):
-        with open(self.path_json, 'w') as json_file:
-            json.dump(self.data, json_file)
+        with open(path_json, 'w', encoding='utf8') as json_file:
+            json.dump(data, json_file, indent=2, ensure_ascii=False)
+    #
+    # def save_as_json(self, data):
+    #     with open("../vacancies.json", "w", encoding="utf-8") as file:
+    #         json.dump(data, file, sort_keys=False, indent=2, ensure_ascii=False)
 
     def get_data_from_json(self: Path) -> list | str:
         """
@@ -48,3 +47,9 @@ class Save2json(AbstractSave):
             return data
         except FileNotFoundError:
             return f'The file is not present'
+
+
+if __name__ == '__main__':
+    v = {'hr_platform': 'SuperJob', 'keyword': 'py', 'top_n_vacancies': 2}
+    saver = Save2json()
+    saver.save2file(v)
