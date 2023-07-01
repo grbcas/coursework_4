@@ -64,26 +64,3 @@ class Vacancy:
 	def __str__(self):
 		return f'{self.profession} {self._salary} {self.currency} {self.link} '
 	# {self.requirements}
-
-
-if __name__ == '__main__':
-	iu = {'hr_platform': 'SuperJob', 'keyword': 'py', 'top_n_vacancies': 2, 'vacancies_sorted': True}
-
-	# sj = ParserSJ('python')
-	# data = sj.get_vacancy()
-	# print(len(data))
-	# with open('sj.json', mode='w', encoding='utf8') as f:
-	# 	# f.write(data)
-	# 	print(data, file=f)
-	#
-	# vacancies = []
-	# for i_vacancy in data:
-	# 	profession = i_vacancy['profession']
-	# 	salary = i_vacancy['payment_from']
-	# 	link = i_vacancy['link']
-	# 	requirements = i_vacancy['link']
-	# 	currency = i_vacancy['currency']
-	#
-	# 	vacancies.append(Vacancy(profession, salary, link, requirements, currency))
-	#
-	# print(vacancies[0])

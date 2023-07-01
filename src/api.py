@@ -21,7 +21,7 @@ class ParserSJ(Api):
 		self.keyword: str = keyword
 
 	def get_vacancy(self):
-		print(self.keyword)
+		# print(self.keyword)
 		api_url = f'https://api.superjob.ru/2.0/vacancies/?' \
 				f'keyword={self.keyword}&' \
 				f'count=5'
@@ -30,7 +30,11 @@ class ParserSJ(Api):
 
 		return sj_data['objects']
 
-# class ParserHH(Api):
-# 	def get_vacancy(self):
-# 		data = requests.get('https:/api.hh.ru/vacancies/').json()
-# 		return data
+
+class ParserHH(Api):
+	def __init__(self, keyword):
+		self.keyword: str = keyword
+
+	def get_vacancy(self):
+		data = requests.get('https:/api.hh.ru/vacancies/').json()
+		return data

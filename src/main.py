@@ -1,6 +1,7 @@
 from src.vacancy import *
 from src.api import *
 from src.utils import *
+from src.save2file import *
 
 # iu = interact_user()
 iu = {'hr_platform': 'SuperJob', 'keyword': 'py', 'top_n_vacancies': 2, 'vacancies_sorted': True}
@@ -22,7 +23,10 @@ for i_vacancy in data:
 
     vacancies.append(Vacancy(profession, salary, link, requirements, currency))
 
-print(vacancies[0])
+vacancy = vacancies[0]
+print(vacancy)
 # print(vacancies[0].salary)
 # vacancies[0].salary = 0
 # print(vacancies[0].salary)
+
+Save2json.save2file(vacancy)
