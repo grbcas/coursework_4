@@ -1,24 +1,24 @@
 import requests
+import json
 
 
 class Vacancy:
 	"""
 	Создать класс для работы с вакансиями.
 	В этом классе самостоятельно определить атрибуты:
-	 название вакансии,
-	 ссылка на вакансию,
-	 зарплата,
-	 краткое описание или требования и т.п. (не менее четырех)
+	название вакансии,
+	ссылка на вакансию,
+	зарплата,
+	краткое описание или требования и т.п. (не менее четырех)
 	Класс должен поддерживать методы сравнения вакансий между собой по зарплате
-	 и валидировать данные, которыми инициализируются его атрибуты
+	и валидировать данные, которыми инициализируются его атрибуты
 	"""
-	def __init__(self, profession, salary, link, requirements, currency):
+	def __init__(self, profession, salary, link, currency):
 		self.profession: str = profession
 		self.currency: str = currency
 		self.salary = salary
 		self.link: str = link
-		self.requirements: str = requirements
-
+		# self.requirements: str = requirements
 
 	@property
 	def salary(self):
@@ -62,5 +62,5 @@ class Vacancy:
 		return self.salary < sc
 
 	def __str__(self):
-		return f'{self.profession} {self._salary} {self.currency} {self.link} '
+		return f'{self.profession} {self.salary} {self.currency} {self.link} '
 	# {self.requirements}

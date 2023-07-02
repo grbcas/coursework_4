@@ -9,6 +9,8 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 import json
 
+PATH = Path(Path(__file__).parent.parent, 'data', 'vacancy.json')
+
 
 class AbstractSave(ABC):
 
@@ -16,35 +18,66 @@ class AbstractSave(ABC):
     def save2file(self, data):
         pass
 
-# PATH = Path(Path(__file__).parent.parent, 'data', 'sj.json')
-
 
 class Save2json(AbstractSave):
     """
-    Class to save a vacancy to a json file
+    Class to write/get data from a json file
     """
-    # path_json = Path(Path(__file__).parent.parent, 'data', 'vacancy.json')
 
-    def save2file(self, data):
-        path_json = Path(Path(__file__).parent.parent, 'data', 'vacancy.json')
-
+    def save2file(self, data, path_json=PATH):
+        """
+        save vacancies to a json file
+        :param data:
+        :param path_json:
+        :return:
+        """
         with open(path_json, 'w', encoding='utf8') as json_file:
             json.dump(data, json_file, indent=2, ensure_ascii=False)
-    #
-    # def save_as_json(self, data):
-    #     with open("../vacancies.json", "w", encoding="utf-8") as file:
-    #         json.dump(data, file, sort_keys=False, indent=2, ensure_ascii=False)
 
-    def get_data_from_json(self: Path) -> list | str:
+    def add_vacancy(self, new_data, path_json=PATH):
         """
-        Load data from json file
-        :param path_to_json_file:
+        Add data to a json file
+        :param new_data:
+        :param path_json:
+        :return:
+        """
+        with open(path_json, 'r', encoding='utf8') as json_file:
+            data = self.get_data_from_json()
+            print(len(data))
+            data.append(new_data)
+            print(len(data))
+        with open(path_json, 'w', encoding='utf8') as json_file:
+            print(data)
+            json.dump(data, json_file, indent=2, ensure_ascii=False)
+
+    def delete_vacancy(self, new_data, path_json=PATH):
+        """
+        Add data to a json file
+        :param new_data:
+        :param path_json:
+        :return:
+        """
+        with open(path_json, 'r', encoding='utf8') as json_file:
+            data: list = self.get_data_from_json()
+            print(len(data))
+            data.remove(new_data)
+            print(len(data))
+        with open(path_json, 'w', encoding='utf8') as json_file:
+            print(data)
+            json.dump(data, json_file, indent=2, ensure_ascii=False)
+
+    def get_data_from_json(self, path_json=PATH, u_request: int=None):
+        """
+        Load first N from a json file
+        :param path_json:
         :return: list | str
         """
         try:
-            with open(self, mode='r', encoding='UTF8') as f:
+            with open(path_json, mode='r', encoding='UTF8') as f:
                 data = json.load(f)
-            return data
+            if u_request:
+                print(data[:u_request])
+                return data[:u_request]
         except FileNotFoundError:
             return f'The file is not present'
 
