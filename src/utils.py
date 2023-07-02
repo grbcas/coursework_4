@@ -39,19 +39,19 @@ def interact_user(_in=stdin):
     print('search_keyword')
     search_keyword = _in.readline().strip()
 
-    n_vacancies = 0
-    while True:
-        try:
-            print('input enter n_vacancies in range(5, 99)>')
-            input_ = _in.readline()
-            if int(input_) in range(5, 100):
-                n_vacancies = int(input_)
-                print('n_vacancies =', n_vacancies)
-                break
-            else:
-                raise ValueError
-        except ValueError:
-            print('enter number in range(5, 99)')
+    # n_vacancies = 0
+    # while True:
+    #     try:
+    #         print('input enter n_vacancies in range(5, 99)>')
+    #         input_ = _in.readline()
+    #         if int(input_) in range(5, 100):
+    #             n_vacancies = int(input_)
+    #             print('n_vacancies =', n_vacancies)
+    #             break
+    #         else:
+    #             raise ValueError
+    #     except ValueError:
+    #         print('enter number in range(5, 99)')
 
     top_n_vacancies = 0
     while True:
@@ -83,7 +83,7 @@ def interact_user(_in=stdin):
 
     user_input = {'hr_platform': hr_platform.get(hr_id),
                   'keyword': search_keyword,
-                  'n_vacancies': n_vacancies,
+                  # 'n_vacancies': n_vacancies,
                   # 'vacancies_sorted': sort_vacancies,
                   'top_n_vacancies': top_n_vacancies}
 

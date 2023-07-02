@@ -66,9 +66,10 @@ class Save2json(AbstractSave):
             print(data)
             json.dump(data, json_file, indent=2, ensure_ascii=False)
 
-    def get_data_from_json(self, path_json=PATH, u_request: int=None):
+    def get_data_from_json(self, path_json=PATH, u_request=1):
         """
         Load first N from a json file
+        :param u_request:
         :param path_json:
         :return: list | str
         """
@@ -76,7 +77,6 @@ class Save2json(AbstractSave):
             with open(path_json, mode='r', encoding='UTF8') as f:
                 data = json.load(f)
             if u_request:
-                print(data[:u_request])
                 return data[:u_request]
         except FileNotFoundError:
             return f'The file is not present'

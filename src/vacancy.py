@@ -26,14 +26,19 @@ class Vacancy:
 
 	@salary.setter
 	def salary(self, value):
-		if value == 0:
-			self._salary = 9999
+		if not value:
+			self._salary = 999
 			# print(f': {value} = {self._salary}')
 		else:
+			# print(f'self._salary = {value} * {self.convert_salary()}')
 			self._salary = value * self.convert_salary()
 
 	def convert_salary(self):
-		if self.currency != 'rub':
+		# print(self.currency.upper(), 'self.currency.upper() ')
+		if self.currency.upper() == 'BYR':
+			rate = self.get_exchange_rate('byn')
+			return rate
+		if self.currency.upper() not in ['RUR', 'RUB']:
 			rate = self.get_exchange_rate(self.currency)
 			return rate
 		return 1
