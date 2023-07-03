@@ -26,7 +26,7 @@ class Save2json(AbstractSave):
 
     def save2file(self, data, path_json=PATH):
         """
-        save vacancies to a json file
+        Save vacancies to a json file
         :param data:
         :param path_json:
         :return:
@@ -52,7 +52,7 @@ class Save2json(AbstractSave):
 
     def delete_vacancy(self, new_data, path_json=PATH):
         """
-        Add data to a json file
+        Del data from a json file
         :param new_data:
         :param path_json:
         :return:
@@ -80,9 +80,3 @@ class Save2json(AbstractSave):
                 return data[:u_request]
         except FileNotFoundError:
             return f'The file is not present'
-
-
-if __name__ == '__main__':
-    v = {'hr_platform': 'SuperJob', 'keyword': 'py', 'top_n_vacancies': 2}
-    saver = Save2json()
-    saver.save2file(v)

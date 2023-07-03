@@ -19,7 +19,7 @@ class ParserSJ(Api):
 
 	def __init__(self, keyword, n_vacancies=5):
 		self.keyword: str = keyword
-		self.n_vacancies: int = n_vacancies
+		# self.n_vacancies: int = n_vacancies
 
 		self.api_url = 'https://api.superjob.ru/2.0/vacancies/'
 		self.params = {
