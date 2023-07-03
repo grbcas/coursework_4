@@ -3,8 +3,8 @@ from src.api import *
 from src.utils import *
 from src.save2file import *
 
-# iu = interact_user()
-iu = {'hr_platform': 'HeadHunter', 'keyword': 'py', 'top_n_vacancies': 2}
+iu = interact_user()
+# iu = {'hr_platform': 'HeadHunter', 'keyword': 'py', 'top_n_vacancies': 2}
 
 
 sj = ParserSJ('python')
@@ -27,17 +27,20 @@ for i_vacancy in data:
     vacancies.append(Vacancy(profession, salary, link, currency))
 
 vacancies.sort(reverse=True)
-print(len(vacancies))
+print(f'LOADED {len(vacancies)}')
 
 vacancies_to_file = []
 for i_vacancy in vacancies:
     vacancies_to_file.append(i_vacancy.__dict__)
-    print(i_vacancy.__dict__)
+    # print(i_vacancy.__dict__)
 
 save2json = Save2json()
 save2json.save2file(vacancies_to_file)
 
 top_n_vacancies = save2json.get_data_from_json(u_request=iu.get('top_n_vacancies'))
-print(top_n_vacancies)
-save2json.add_vacancy(vacancies[0].__dict__)
+
+print(f'The list of the top N vacancies: {len(top_n_vacancies)}')
+
+print(*top_n_vacancies)
+# save2json.add_vacancy(vacancies[0].__dict__)
 # save2json.delete_vacancy(vacancies[0].__dict__)

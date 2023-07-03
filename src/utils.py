@@ -58,14 +58,14 @@ def interact_user(_in=stdin):
         try:
             print('input enter top_n_vacancies >')
             input_ = _in.readline()
-            if int(input_) in range(n_vacancies):
+            if int(input_) in range(20):
                 top_n_vacancies = int(input_)
                 print('top_n_vacancies =', top_n_vacancies)
                 break
             else:
                 raise ValueError
         except ValueError:
-            print(f'enter number in range(1, {n_vacancies})')
+            print(f'enter number in range(1, {20})')
 
     # sort_vacancies = 0
     # while True:

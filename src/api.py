@@ -55,7 +55,7 @@ class ParserHH(Api):
 		self.keyword = keyword
 		self.api_url = f'https://api.hh.ru/vacancies?text={self.keyword}'
 		self.params = {
-			"per_page": 5,
+			"per_page": 20,
 			"page": 0,
 			"archived": False
 		}
